@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Menu - Nara Café</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{background:#FDF6F0;min-height:100vh;}
+
+/* TOP BAR */
+.topbar{
+  background:linear-gradient(135deg,#2D1B1E 0%,#4A2830 100%);
+  padding:20px 36px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.topbar-brand{font-family:'Playfair Display',serif;font-size:22px;color:white;}
+.topbar-brand span{font-size:12px;font-weight:400;opacity:.6;margin-left:10px;letter-spacing:.05em;}
+.topbar-badge{
+  background:rgba(200,102,122,.25);
+  border:1px solid rgba(200,102,122,.5);
+  color:#F4B8C8;
+  font-size:11px;font-weight:500;letter-spacing:.05em;
+  padding:5px 14px;border-radius:20px;
+}
+
+/* LAYOUT */
+.container{max-width:1100px;margin:0 auto;padding:36px 24px;}
+
+/* FORM BOX */
+.form-box{
+  background:white;border-radius:20px;
+  border:1px solid #F0E8E9;
+  padding:32px;margin-bottom:28px;
+  box-shadow:0 4px 16px rgba(45,27,30,.06);
+}
+.section-heading{
+  font-family:'Playfair Display',serif;
+  font-size:20px;color:#2D1B1E;
+  margin-bottom:22px;
+  padding-bottom:14px;
+  border-bottom:2px solid #F0E8E9;
+  display:flex;align-items:center;gap:10px;
+}
+.section-heading .icon{
+  width:32px;height:32px;background:#FEF0F5;
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-grid .full{grid-column:1 / -1;}
+
+.input-group{margin-bottom:0;}
+.input-group label{display:block;margin-bottom:6px;font-size:12px;color:#6B5458;font-weight:500;letter-spacing:.03em;}
+.input-group input,
+.input-group select,
+.input-group textarea{
+  width:100%;padding:11px 14px;
+  border:1.5px solid #F0E8E9;border-radius:10px;
+  font-size:14px;color:#2D1B1E;
+  transition:border-color .25s, box-shadow .25s;
+  outline:none;font-family:'Poppins',sans-serif;
+  background:white;
+}
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus{
+  border-color:#C8667A;
+  box-shadow:0 0 0 3px rgba(200,102,122,.1);
+}
+textarea{resize:none;height:80px;}
+
+.btn-row{display:flex;gap:10px;margin-top:20px;}
+.btn{
+  padding:11px 22px;border:none;border-radius:10px;
+  cursor:pointer;font-size:14px;font-weight:600;
+  transition:.25s;font-family:'Poppins',sans-serif;
+}
+.btn-simpan{background:#C8667A;color:white;}
+.btn-simpan:hover{background:#B5566A;box-shadow:0 6px 16px rgba(200,102,122,.3);}
+.btn-reset{background:#F5EAEC;color:#8B5E52;}
+.btn-reset:hover{background:#F0E0E4;}
+
+/* TABLE SECTION */
+.menu-section{
+  background:white;border-radius:20px;
+  border:1px solid #F0E8E9;
+  padding:28px 32px;margin-bottom:24px;
+  box-shadow:0 4px 16px rgba(45,27,30,.06);
+}
+
+table{width:100%;border-collapse:collapse;}
+thead tr{border-bottom:2px solid #F0E8E9;}
+th{
+  padding:12px 14px;text-align:left;
+  font-size:12px;font-weight:600;color:#8B7275;
+  letter-spacing:.05em;text-transform:uppercase;
+}
+td{padding:14px 14px;border-bottom:1px solid #F9F1F2;font-size:13px;color:#2D1B1E;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#FDF6F0;}
+td img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:2px solid #F0E8E9;}
+
+.category-pill{
+  display:inline-block;font-size:11px;font-weight:600;
+  padding:3px 10px;border-radius:20px;
+}
+.pill-makanan{background:#FEF0F5;color:#C8667A;}
+.pill-minuman{background:#EFF0FE;color:#534AB7;}
+
+.btn-edit{background:#E8F5E9;color:#2E7D32;font-size:12px;padding:6px 12px;}
+.btn-edit:hover{background:#C8E6C9;}
+.btn-hapus{background:#FFEBEE;color:#C62828;font-size:12px;padding:6px 12px;}
+.btn-hapus:hover{background:#FFCDD2;}
+
+.empty{
+  text-align:center;padding:40px 20px;
+  color:#C5B0B3;font-size:14px;
+}
+.empty .empty-icon{font-size:32px;margin-bottom:10px;}
+
+/* EDIT INDICATOR */
+.edit-mode-indicator{
+  display:none;
+  background:#FEF0F5;border:1px solid #F4B8C8;
+  border-radius:10px;padding:10px 16px;
+  font-size:13px;color:#8B5E52;
+  margin-bottom:16px;
+}
+.edit-mode-indicator.show{display:flex;align-items:center;gap:8px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    ☕ Nara Café ☕
+    <span>Panel Admin</span>
+  </div>
+  <div class="topbar-badge">✦ Admin Mode</div>
+</div>
+
+<div class="container">
+
+  <!-- FORM -->
+  <div class="form-box">
+    <div class="section-heading">
+      <div class="icon">✏️</div>
+      Form Tambah / Edit Menu
+    </div>
+
+    <div id="editIndicator" class="edit-mode-indicator">
+      ✏️ Sedang mode edit — ubah data lalu klik Simpan
+    </div>
+
+    <form id="menuForm">
+      <input type="hidden" id="editId">
+
+      <div class="form-grid">
+        <div class="input-group">
+          <label>Nama Menu</label>
+          <input type="text" id="namaMenu" placeholder="Contoh: Nasi Goreng" required>
+        </div>
+
+        <div class="input-group">
+          <label>Kategori</label>
+          <select id="kategori" required>
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Makanan">Makanan</option>
+            <option value="Minuman">Minuman</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Harga (Rp)</label>
+          <input type="number" id="harga" placeholder="Contoh: 20000" required>
+        </div>
+
+        <div class="input-group">
+          <label>Gambar</label>
+          <input type="text" id="gambar" placeholder="Contoh: image/nasigoreng.jpg">
+        </div>
+
+        <div class="input-group full">
+          <label>Deskripsi</label>
+          <textarea id="deskripsi" placeholder="Masukkan deskripsi menu" required></textarea>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" class="btn btn-simpan">Simpan Menu</button>
+        <button type="button" class="btn btn-reset" onclick="resetForm()">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- TABLE MAKANAN -->
+  <div class="menu-section">
+    <div class="section-heading">
+      <div class="icon">🍽️</div>
+      Data Menu Makanan
+    </div>
+    <div id="tabelMakanan"></div>
+  </div>
+
+  <!-- TABLE MINUMAN -->
+  <div class="menu-section">
+    <div class="section-heading">
+      <div class="icon">🥤</div>
+      Data Menu Minuman
+    </div>
+    <div id="tabelMinuman"></div>
+  </div>
+
+</div>
+
+<script>
+const menuForm = document.getElementById("menuForm");
+const editIndicator = document.getElementById("editIndicator");
+
+let dataMenu = JSON.parse(localStorage.getItem("dataMenuCafé")) || [];
+
+menuForm.addEventListener("submit", function(event){
+  event.preventDefault();
+  const editId = document.getElementById("editId").value;
+  const namaMenu = document.getElementById("namaMenu").value.trim();
+  const kategori = document.getElementById("kategori").value;
+  const harga = document.getElementById("harga").value;
+  const gambar = document.getElementById("gambar").value.trim();
+  const deskripsi = document.getElementById("deskripsi").value.trim();
+
+  if(!namaMenu || !kategori || !harga || !deskripsi){
+    alert("Semua kolom wajib diisi kecuali gambar.");
+    return;
+  }
+
+  const menu = {
+    id: editId ? Number(editId) : Date.now(),
+    namaMenu,kategori,
+    harga:Number(harga),
+    gambar:gambar || "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=200&q=60",
+    deskripsi
+  };
+
+  if(editId){
+    dataMenu = dataMenu.map(item => item.id === Number(editId) ? menu : item);
+    alert("Menu berhasil diperbarui!");
+  }else{
+    dataMenu.push(menu);
+    alert("Menu berhasil ditambahkan!");
+  }
+
+  localStorage.setItem("dataMenuCafé", JSON.stringify(dataMenu));
+  resetForm();
+  tampilkanMenu();
+});
+
+function tampilkanMenu(){
+  const makanan = dataMenu.filter(item => item.kategori === "Makanan");
+  const minuman = dataMenu.filter(item => item.kategori === "Minuman");
+  document.getElementById("tabelMakanan").innerHTML = buatTabel(makanan);
+  document.getElementById("tabelMinuman").innerHTML = buatTabel(minuman);
+}
+
+function buatTabel(data){
+  if(data.length === 0){
+    return `<div class="empty"><div class="empty-icon">🍃</div>Belum ada data menu. Tambahkan melalui form di atas.</div>`;
+  }
+
+  let tabel = `
+    <table>
+      <thead><tr>
+        <th>Gambar</th>
+        <th>Nama Menu</th>
+        <th>Kategori</th>
+        <th>Harga</th>
+        <th>Deskripsi</th>
+        <th>Aksi</th>
+      </tr></thead>
+      <tbody>
+  `;
+
+  data.forEach(item => {
+    const pillClass = item.kategori === "Makanan" ? "pill-makanan" : "pill-minuman";
+    tabel += `
+      <tr>
+        <td><img src="${item.gambar}" alt="${item.namaMenu}" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=200&q=60'"></td>
+        <td><strong>${item.namaMenu}</strong></td>
+        <td><span class="category-pill ${pillClass}">${item.kategori}</span></td>
+        <td>Rp ${item.harga.toLocaleString("id-ID")}</td>
+        <td style="max-width:200px;color:#6B5458;">${item.deskripsi}</td>
+        <td>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="btn btn-edit" onclick="editMenu(${item.id})">Edit</button>
+            <button class="btn btn-hapus" onclick="hapusMenu(${item.id})">Hapus</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+
+  tabel += `</tbody></table>`;
+  return tabel;
+}
+
+function editMenu(id){
+  const menu = dataMenu.find(item => item.id === id);
+  document.getElementById("editId").value = menu.id;
+  document.getElementById("namaMenu").value = menu.namaMenu;
+  document.getElementById("kategori").value = menu.kategori;
+  document.getElementById("harga").value = menu.harga;
+  document.getElementById("gambar").value = menu.gambar;
+  document.getElementById("deskripsi").value = menu.deskripsi;
+  editIndicator.classList.add("show");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function hapusMenu(id){
+  if(confirm("Yakin ingin menghapus menu ini?")){
+    dataMenu = dataMenu.filter(item => item.id !== id);
+    localStorage.setItem("dataMenuCafé", JSON.stringify(dataMenu));
+    tampilkanMenu();
+  }
+}
+
+function resetForm(){
+  document.getElementById("editId").value = "";
+  menuForm.reset();
+  editIndicator.classList.remove("show");
+}
+
+tampilkanMenu();
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrasi - Nara Café</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+  min-height:100vh;
+  background:
+    linear-gradient(160deg, rgba(200,102,122,.12) 0%, rgba(155,137,196,.1) 100%),
+    #FDF6F0;
+  display:flex;align-items:center;justify-content:center;padding:40px 16px;
+}
+
+.page-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  width:900px;min-height:580px;
+  border-radius:28px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(45,27,30,.12);
+}
+
+/* Left panel */
+.left-panel{
+  background:linear-gradient(160deg,#C8667A 0%,#8B5E52 100%);
+  padding:50px 40px;
+  display:flex;flex-direction:column;justify-content:center;
+  color:white;
+}
+.left-panel .brand{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:6px;}
+.left-panel .brand-sub{font-size:12px;opacity:.75;letter-spacing:.1em;margin-bottom:40px;}
+.left-panel h2{font-family:'Playfair Display',serif;font-size:32px;line-height:1.25;margin-bottom:16px;}
+.left-panel h2 em{font-style:italic;opacity:.85;}
+.left-panel p{font-size:13px;opacity:.8;line-height:1.8;}
+.panel-deco{
+  margin-top:40px;
+  display:flex;gap:12px;
+}
+.deco-dot{
+  width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);
+}
+.deco-dot.active{background:white;width:24px;border-radius:4px;}
+
+/* Right panel */
+.right-panel{
+  background:white;padding:46px 40px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.right-panel h3{
+  font-family:'Playfair Display',serif;
+  font-size:22px;color:#2D1B1E;margin-bottom:6px;
+}
+.right-panel .sub{font-size:12px;color:#8B7275;margin-bottom:28px;}
+
+.input-group{margin-bottom:16px;}
+.input-group label{display:block;margin-bottom:6px;font-size:12px;color:#6B5458;font-weight:500;letter-spacing:.03em;}
+.input-group input{
+  width:100%;padding:11px 14px;
+  border:1.5px solid #F0E8E9;border-radius:10px;
+  font-size:14px;color:#2D1B1E;
+  transition:border-color .25s, box-shadow .25s;
+  outline:none;
+}
+.input-group input:focus{border-color:#C8667A;box-shadow:0 0 0 3px rgba(200,102,122,.1);}
+.input-group input::placeholder{color:#C5B0B3;}
+
+.btn-register{
+  width:100%;padding:13px;
+  border:none;border-radius:12px;
+  background:#C8667A;color:white;
+  font-size:15px;font-weight:600;cursor:pointer;
+  transition:.3s;font-family:'Poppins',sans-serif;
+  margin-top:4px;
+}
+.btn-register:hover{background:#B5566A;box-shadow:0 8px 20px rgba(200,102,122,.3);}
+
+.login-link{text-align:center;margin-top:18px;font-size:13px;color:#8B7275;}
+.login-link a{color:#C8667A;text-decoration:none;font-weight:600;}
+.login-link a:hover{text-decoration:underline;}
+
+.message{
+  margin-bottom:14px;padding:11px 14px;
+  border-radius:10px;text-align:center;font-size:13px;display:none;
+}
+.message.success{background:#E8F5E9;color:#2E7D32;border:1px solid #A5D6A7;}
+.message.error{background:#FFEBEE;color:#C62828;border:1px solid #EF9A9A;}
+
+@media(max-width:700px){
+  .page-wrap{grid-template-columns:1fr;}
+  .left-panel{display:none;}
+  .right-panel{padding:36px 28px;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Left decorative panel -->
+  <div class="left-panel">
+    <div class="brand">Nara Café</div>
+    <div class="brand-sub">BY NAYLA · NADIVA · NOERA</div>
+    <h2>Bergabunglah dengan keluarga kami</h2>
+    <p>Daftarkan diri dan nikmati pengalaman ngopi yang lebih personal, promo eksklusif, reservasi mudah, dan banyak lagi.</p>
+    <div class="panel-deco">
+      <div class="deco-dot active"></div>
+      <div class="deco-dot"></div>
+      <div class="deco-dot"></div>
+    </div>
+  </div>
+
+  <!-- Right form panel -->
+  <div class="right-panel">
+    <h3>Buat Akun Baru</h3>
+    <p class="sub">Isi data di bawah untuk mulai bergabung</p>
+
+    <div id="message" class="message"></div>
+
+    <form id="registerForm">
+      <div class="input-group">
+        <label>Nama Lengkap</label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+      </div>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Masukkan email" required>
+      </div>
+      <div class="input-group">
+        <label>No. Telepon</label>
+        <input type="tel" id="telepon" placeholder="Masukkan nomor telepon" required>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Minimal 6 karakter" required>
+      </div>
+      <div class="input-group">
+        <label>Konfirmasi Password</label>
+        <input type="password" id="konfirmasi" placeholder="Ulangi password" required>
+      </div>
+      <button type="submit" class="btn-register">Daftar Sekarang</button>
+    </form>
+
+    <div class="login-link">
+      Sudah punya akun? <a href="login.html">Login di sini</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const form = document.getElementById("registerForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", function(event){
+  event.preventDefault();
+  const nama = document.getElementById("nama").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const telepon = document.getElementById("telepon").value.trim();
+  const password = document.getElementById("password").value;
+  const konfirmasi = document.getElementById("konfirmasi").value;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const teleponPattern = /^[0-9]+$/;
+
+  if(nama === ""){tampilkanPesan("Nama lengkap tidak boleh kosong!","error");return;}
+  if(!emailPattern.test(email)){tampilkanPesan("Format email tidak valid!","error");return;}
+  if(!teleponPattern.test(telepon)){tampilkanPesan("Nomor telepon hanya boleh berisi angka!","error");return;}
+  if(telepon.length < 10){tampilkanPesan("Nomor telepon minimal 10 angka!","error");return;}
+  if(password.length < 6){tampilkanPesan("Password minimal 6 karakter!","error");return;}
+  if(password !== konfirmasi){tampilkanPesan("Password dan konfirmasi tidak cocok!","error");return;}
+
+  const user = {nama,email,telepon,password,role:"pelanggan"};
+  localStorage.setItem("userKafe", JSON.stringify(user));
+  tampilkanPesan("Registrasi berhasil! Mengalihkan ke halaman login...","success");
+  form.reset();
+  setTimeout(function(){window.location.href="login.html";},1500);
+});
+
+function tampilkanPesan(teks,tipe){
+  message.innerHTML=teks;
+  message.className="message "+tipe;
+  message.style.display="block";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Nara Café</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+  min-height:100vh;
+  background:
+    linear-gradient(160deg, rgba(155,137,196,.12) 0%, rgba(200,102,122,.1) 100%),
+    #FDF6F0;
+  display:flex;align-items:center;justify-content:center;padding:40px 16px;
+}
+
+.page-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  width:820px;min-height:520px;
+  border-radius:28px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(45,27,30,.12);
+}
+
+/* Right decorative panel */
+.right-panel-deco{
+  background:linear-gradient(160deg,#4A2830 0%,#2D1B1E 100%);
+  padding:50px 40px;
+  display:flex;flex-direction:column;justify-content:center;
+  color:white;order:2;
+}
+.right-panel-deco .brand{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:6px;}
+.right-panel-deco .brand-sub{font-size:12px;opacity:.6;letter-spacing:.1em;margin-bottom:40px;}
+.right-panel-deco h2{font-family:'Playfair Display',serif;font-size:30px;line-height:1.3;margin-bottom:16px;}
+.right-panel-deco h2 em{font-style:italic;color:#F4B8C8;}
+.right-panel-deco p{font-size:13px;opacity:.7;line-height:1.8;}
+.quote-mark{font-family:'Playfair Display',serif;font-size:60px;color:rgba(244,184,200,.3);line-height:1;margin-bottom:-10px;}
+
+/* Left form panel */
+.left-panel-form{
+  background:white;padding:50px 42px;
+  display:flex;flex-direction:column;justify-content:center;
+  order:1;
+}
+.left-panel-form h3{font-family:'Playfair Display',serif;font-size:24px;color:#2D1B1E;margin-bottom:6px;}
+.left-panel-form .sub{font-size:12px;color:#8B7275;margin-bottom:32px;}
+
+.input-group{margin-bottom:18px;}
+.input-group label{display:block;margin-bottom:6px;font-size:12px;color:#6B5458;font-weight:500;letter-spacing:.03em;}
+.input-group input{
+  width:100%;padding:12px 14px;
+  border:1.5px solid #F0E8E9;border-radius:10px;
+  font-size:14px;color:#2D1B1E;
+  transition:border-color .25s, box-shadow .25s;
+  outline:none;
+}
+.input-group input:focus{border-color:#C8667A;box-shadow:0 0 0 3px rgba(200,102,122,.1);}
+.input-group input::placeholder{color:#C5B0B3;}
+
+.btn-login{
+  width:100%;padding:13px;
+  border:none;border-radius:12px;
+  background:#C8667A;color:white;
+  font-size:15px;font-weight:600;cursor:pointer;
+  transition:.3s;font-family:'Poppins',sans-serif;
+  margin-top:4px;
+}
+.btn-login:hover{background:#B5566A;box-shadow:0 8px 20px rgba(200,102,122,.3);}
+
+.register-link{text-align:center;margin-top:20px;font-size:13px;color:#8B7275;}
+.register-link a{color:#C8667A;text-decoration:none;font-weight:600;}
+.register-link a:hover{text-decoration:underline;}
+
+.message{
+  margin-bottom:14px;padding:11px 14px;
+  border-radius:10px;text-align:center;font-size:13px;display:none;
+}
+.message.success{background:#E8F5E9;color:#2E7D32;border:1px solid #A5D6A7;}
+.message.error{background:#FFEBEE;color:#C62828;border:1px solid #EF9A9A;}
+
+.back-home{
+  display:inline-block;margin-bottom:28px;
+  font-size:12px;color:#8B7275;text-decoration:none;
+  letter-spacing:.03em;
+}
+.back-home:hover{color:#C8667A;}
+
+@media(max-width:680px){
+  .page-wrap{grid-template-columns:1fr;}
+  .right-panel-deco{display:none;}
+  .left-panel-form{padding:36px 28px;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Form panel -->
+  <div class="left-panel-form">
+    <a href="index.html" class="back-home">← Kembali ke Beranda</a>
+    <h3>Selamat Datang Kembali</h3>
+    <p class="sub">Masuk untuk menikmati layanan eksklusif Nara Café</p>
+
+    <div id="message" class="message"></div>
+
+    <form id="loginForm">
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Masukkan email" required>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Masukkan password" required>
+      </div>
+      <button type="submit" class="btn-login">Masuk</button>
+    </form>
+
+    <div class="register-link">
+      Belum punya akun? <a href="register.html">Daftar sekarang</a>
+    </div>
+  </div>
+
+  <!-- Decorative panel -->
+  <div class="right-panel-deco">
+    <div class="brand">Nara Café</div>
+    <div class="brand-sub">BY NAYLA · NADIVA · NOERA</div>
+    <div class="quote-mark">"</div>
+    <h2>Setiap tegukan<br>adalah <em>cerita</em></h2>
+    <p>Kami percaya kopi yang baik dimulai dari bahan terpilih, tangan yang terlatih, dan hati yang tulus.</p>
+  </div>
+
+</div>
+
+<script>
+const loginForm = document.getElementById("loginForm");
+const message = document.getElementById("message");
+
+loginForm.addEventListener("submit", function(event){
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  const adminDefault = {
+    nama:"Admin Nara Café",
+    email:"admin@naracafe.com",
+    telepon:"-",
+    password:"admin123",
+    role:"admin"
+  };
+
+  const userData = localStorage.getItem("userKafe");
+  let user = null;
+
+  if(email === adminDefault.email && password === adminDefault.password){
+    user = adminDefault;
+  }else if(userData !== null){
+    const pelanggan = JSON.parse(userData);
+
+    if(email === pelanggan.email && password === pelanggan.password){
+      user = pelanggan;
+    }
+  }
+
+  if(user !== null){
+    sessionStorage.setItem("isLogin","true");
+    sessionStorage.setItem("userLogin",JSON.stringify(user));
+
+    localStorage.setItem("isLogin","true");
+    localStorage.setItem("userLogin",JSON.stringify(user));
+
+    tampilkanPesan("Login berhasil! Mengalihkan...","success");
+
+    setTimeout(function(){
+      if(user.role === "admin"){
+        window.location.href = "dashboard-admin.html";
+      }else{
+        window.location.href = "profil.html";
+      }
+    },1500);
+  }else{
+    tampilkanPesan("Email atau password salah!","error");
+  }
+});
+
+function tampilkanPesan(teks,tipe){
+  message.innerHTML = teks;
+  message.className = "message " + tipe;
+  message.style.display = "block";
+}
+</script>
+</body>
+</html>
